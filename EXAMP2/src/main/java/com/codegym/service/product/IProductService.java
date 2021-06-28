@@ -6,4 +6,5 @@ import com.codegym.service.IGeneralService;
 
 public interface IProductService extends IGeneralService <Product>{
     Iterable<Product> findAllByCategory(Category category);
+
 }

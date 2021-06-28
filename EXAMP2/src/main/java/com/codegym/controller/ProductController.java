@@ -71,20 +71,20 @@ public class ProductController {
                 try {
                     File serverFile = new File(folderUpload + fileName);
                     BufferedOutputStream stream = new BufferedOutputStream(new FileOutputStream(serverFile));
+
+                    System.out.println(serverFile);
                     stream.write(fileData.getBytes());
                     stream.close();
 
+
                     product.setImage(fileName);
                     productService.save(product);
+
                 } catch (Exception e) {
                     System.out.println("Error Write file: " + fileName);
                 }
             }
         }
-//        ModelAndView modelAndView = new ModelAndView("manager/product/index");
-//        modelAndView.addObject("product", product);
-//        modelAndView.addObject("success", "Created new product successfully !");
-//        return modelAndView;
         return "redirect:product";
 
     }
@@ -95,6 +95,7 @@ public class ProductController {
         if (product.isPresent()) {
             ModelAndView modelAndView = new ModelAndView("manager/product/edit");
             modelAndView.addObject("product", product.get());
+            System.out.println(product.get().getImage());
             modelAndView.addObject("uploadFile", new UploadFile());
             return modelAndView;
         } else {
@@ -115,7 +116,6 @@ public class ProductController {
         }
 
         CommonsMultipartFile[] filesData = uploadFile.getFilesData();
-
         for (CommonsMultipartFile fileData : filesData) {
 
             String fileName = fileData.getOriginalFilename();
@@ -129,15 +129,17 @@ public class ProductController {
 
                     product.setImage(fileName);
                     productService.save(product);
+                    System.out.println(product.getId()+product.getProductName());
                 } catch (Exception e) {
                     System.out.println("Error Write file: " + fileName);
                 }
+            }else{
+                productService.save(product);
             }
         }
         return "redirect:product";
     }
-
-        @GetMapping("/delete/{id}")
+        @GetMapping("/delete-product/{id}")
     public ModelAndView showDeleteForm(@PathVariable Long id) {
         Optional<Product> product = productService.findById(id);
         if (product.isPresent()) {

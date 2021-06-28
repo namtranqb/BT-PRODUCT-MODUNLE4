@@ -25,7 +25,7 @@ public class ProductService implements IProductService {
 
     @Override
     public void save(Product product) {
-        productRepository.save(product);
+            productRepository.save(product);
     }
 
     @Override
@@ -37,4 +37,5 @@ public class ProductService implements IProductService {
     public Iterable<Product> findAllByCategory(Category category) {
         return productRepository.findAllByCategory(category);
     }
+
 }

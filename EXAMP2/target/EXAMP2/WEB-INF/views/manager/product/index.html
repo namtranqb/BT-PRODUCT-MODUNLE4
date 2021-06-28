@@ -3,6 +3,75 @@
 <head th:replace="/manager/product/product-layout :: head"></head>
 
 <body>
+<!--<div class="modal fade col-md-6.ml-auto" id="editProductForm" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"-->
+<!--     aria-hidden="true">-->
+<!--    <div class="modal-dialog" role="document">-->
+<!--        <form th:action="@{/edit}" th:object="${product}" method="post" enctype="multipart/form-data">-->
+<!--            <div class="modal-content">-->
+<!--                <div class="modal-header">-->
+<!--                    <h5 class="modal-title" id="exampleModalLabel">Edit Product</h5>-->
+<!--                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">-->
+<!--                        <span aria-hidden="true">&times;</span>-->
+<!--                    </button>-->
+<!--                </div>-->
+<!--                <div class="modal-body">-->
+<!--                    <div class="row">-->
+<!--                        <label for="id" class="col-md-4">ID: </label>-->
+<!--                        <div class="col-md-5">-->
+<!--                            <input type="text" class="form-control input-full" th:field="*{id}" id="id"-->
+<!--                                   placeholder="Enter Input">-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                    <div class="row">-->
+<!--                        <label for="code" class="col-md-4">Product Code: </label>-->
+<!--                        <div class="col-md-5">-->
+<!--                            <input type="text" class="form-control input-full" th:field="*{productCode}" id="code"-->
+<!--                                   placeholder="Enter Input">-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                    <div class="row">-->
+<!--                        <label for="pname" class="col-md-4">Product Name: </label>-->
+<!--                        <div class="col-md-5">-->
+<!--                            <input type="text" class="form-control input-full" th:field="*{productName}" id="pname"-->
+<!--                                   placeholder="Enter Input">-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                    <div class="row">-->
+<!--                        <label for="price" class="col-md-4">Price: </label>-->
+<!--                        <div class="col-md-5">-->
+<!--                            <input type="text" class="form-control input-full" th:field="*{price}" id="price"-->
+<!--                                   placeholder="Enter Input">-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                    <div class="row">-->
+<!--                        <label for="category" class="col-md-4">Category</label>-->
+<!--                        <div class="col-md-5" style="margin-left: 1px">-->
+<!--                            <select th:field="*{category}" id="category">-->
+<!--                                <option class="btn" th:each="c : ${categories}" th:value="${c.categoryId}"-->
+<!--                                        th:text="${c.categoryName}"></option>-->
+<!--                            </select>-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                    <div class="row">-->
+<!--                        <label class="col-md-4" for="image">Upload Image: </label>-->
+<!--                        <input class="col-md-5" type="file" th:field="${uploadFile.filesData}" id="image">-->
+<!--                        <div class="image-preview col-md-3.ml" id="imagePreview">-->
+<!--                            <img src="" alt="Image Preview" class="image-preview__image">-->
+<!--                            <span class="image-preview__default-text">-->
+<!--                                <img width="150" height="150"-->
+<!--                                     th:src="@{'/upload/product-img/' + ${product.getImage()}}">-->
+<!--                            </span>-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--                <div class="modal-footer">-->
+<!--                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>-->
+<!--                    <button type="button" class="btn btn-primary">Save changes</button>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--        </form>-->
+<!--    </div>-->
+<!--</div>-->
 <main>
     <div class="container-fluid">
         <h1 class="mt-4">Product Manager</h1>
@@ -11,11 +80,6 @@
             <li class="breadcrumb-item active">Tables</li>
         </ol>
         <div th:replace="/manager/product/product-layout :: create"></div>
-
-        <th:block th:if="${message}">
-            <p th:text="${message}"></p>
-        </th:block>
-
         <div class="card mb-4">
             <div class="card-header">
                 <i class="fas fa-table me-1"></i>
@@ -47,11 +111,11 @@
                         <td th:text="${row.category.getCategoryName()}"></td>
                         <td>
                             <a th:href="@{/edit-product/__${row.id}__ }" class="btn btn-outline-warning" >Edit</a>
+<!--                            <a href="" class="btn btn-outline-warning" data-toggle="modal" data-target="#editProductForm">-->
+<!--                                Edit-->
+<!--                            </a>-->
 
-
-                            <a th:href="@{/delete-product/__${row.id}__ }" class="btn btn-outline-danger" >delete</a>
-
-                            <a th:href="@{/view/(id=${row.getId()})}">view</a>
+                            <a th:href="@{/delete-product/__${row.id}__  }" class="btn btn-outline-danger" >delete</a>
                         </td>
                     </tr>
                     </tbody>
@@ -63,45 +127,6 @@
 
 <footer th:replace="/manager/product/product-layout :: footer"></footer>
 
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js"
-        crossorigin="anonymous"></script>
-<script src="/template/js/scripts.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/simple-datatables@latest" crossorigin="anonymous"></script>
-<script src="https://code.jquery.com/jquery-3.5.1.js" crossorigin="anonymous"></script>
-<script src="https://cdn.datatables.net/1.10.25/js/jquery.dataTables.min.js" crossorigin="anonymous"></script>
-<script src="https://cdn.datatables.net/1.10.25/js/dataTables.bootstrap4.min.js" crossorigin="anonymous"></script>
-<script>
-    $(document).ready(function () {
-        $('#datatablesSimple').DataTable();
-    });
-</script>
-
-<script>
-    const image = document.getElementById("image");
-    const previewContainer = document.getElementById("imagePreview");
-    const previewImage = previewContainer.querySelector(".image-preview__image");
-    const previewDefaultText = previewContainer.querySelector(".image-preview__default-text");
-
-    image.addEventListener("change", function () {
-        const file = this.files[0];
-
-        if (file) {
-            const reader = new FileReader();
-            previewDefaultText.style.display = "none";
-            previewImage.style.display = "block";
-
-            reader.addEventListener("load", function () {
-                console.log(this);
-                previewImage.setAttribute("src", this.result);
-            });
-            reader.readAsDataURL(file);
-        } else {
-            previewDefaultText.style.display = "block";
-            previewImage.style.display = "none";
-            previewImage.setAttribute("src", "");
-        }
-    });
-</script>
-
+<div th:replace="/manager/product/product-layout :: script"></div>
 </body>
 </html>
