@@ -50,7 +50,7 @@ public class ProductController {
         return modelAndView;
     }
 
-    @PostMapping("/product")
+    @PostMapping("/create-product")
     public String addProduct(@ModelAttribute("product") Product product, HttpServletRequest request, @ModelAttribute("uploadFile") UploadFile uploadFile) {
         String uploadRootPath = request.getServletContext().getRealPath("/upload/product-img/");
         if (folderUpload.isEmpty()) {
@@ -83,6 +83,10 @@ public class ProductController {
                 } catch (Exception e) {
                     System.out.println("Error Write file: " + fileName);
                 }
+            }else{
+                String img_default = "product-default-img.jpg";
+                product.setImage(img_default);
+                productService.save(product);
             }
         }
         return "redirect:product";

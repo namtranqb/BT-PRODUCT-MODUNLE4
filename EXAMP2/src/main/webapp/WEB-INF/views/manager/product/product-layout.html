@@ -46,7 +46,7 @@
 
     <div th:fragment="create" class="col-md-6" style="margin-bottom: 10px">
         <div class="card">
-            <form th:action="@{/product}" th:object="${product}" method="post" enctype="multipart/form-data"
+            <form th:action="@{/create-product}" th:object="${product}" method="post" enctype="multipart/form-data"
                   id="createForm">
                 <div class="card-header">
                     <div class="card-title">Create Product</div>
@@ -87,7 +87,7 @@
                         <input class="col-md-5" type="file" th:field="${uploadFile.filesData}" id="image">
                         <div class="image-preview col-md-3.ml" id="imagePreview">
                             <img src="" alt="Image Preview" class="image-preview__image">
-                            <img width="150" height="150" class="image-preview__default" th:src="@{'/template/default-img/default.jpg'}">
+                            <img width="150" height="150" class="image-preview__default" th:src="@{'/upload/product-img/product-default-img.jpg'}">
                         </div>
                     </div>
                 </div>
