@@ -2,7 +2,7 @@ package com.codegym.model;
 
 import javax.persistence.*;
 import java.util.List;
-@Entity
+//@Entity
 @Table(name = "categories")
 public class Category {
     @Id

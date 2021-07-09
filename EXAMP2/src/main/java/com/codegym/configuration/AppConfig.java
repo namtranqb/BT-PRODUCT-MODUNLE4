@@ -100,7 +100,7 @@ public class AppConfig implements WebMvcConfigurer, ApplicationContextAware {
     @Bean
     public LocalContainerEntityManagerFactoryBean entityManagerFactory() {
         LocalContainerEntityManagerFactoryBean em = new LocalContainerEntityManagerFactoryBean();
-        em.setDataSource(dataSource());
+//        em.setDataSource(dataSource());
         em.setPackagesToScan("com.codegym.model");
 
         JpaVendorAdapter vendorAdapter = new HibernateJpaVendorAdapter();
@@ -109,15 +109,15 @@ public class AppConfig implements WebMvcConfigurer, ApplicationContextAware {
         return em;
     }
 
-    @Bean
-    public DataSource dataSource() {
-        DriverManagerDataSource dataSource = new DriverManagerDataSource();
-        dataSource.setDriverClassName("com.mysql.cj.jdbc.Driver");
-        dataSource.setUrl("jdbc:mysql://localhost:3306/productspringmvc");
-        dataSource.setUsername("root");
-        dataSource.setPassword("admin");
-        return dataSource;
-    }
+//    @Bean
+//    public DataSource dataSource() {
+//        DriverManagerDataSource dataSource = new DriverManagerDataSource();
+//        dataSource.setDriverClassName("com.mysql.cj.jdbc.Driver");
+//        dataSource.setUrl("jdbc:mysql://localhost:3306/productspringmvc");
+//        dataSource.setUsername("root");
+//        dataSource.setPassword("admin");
+//        return dataSource;
+//    }
 
     @Bean
     public PlatformTransactionManager transactionManager(EntityManagerFactory emf) {
